@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "codeowl": {
+      "command": "/home/sidd/dev/openSource/codeowl/target/release/codeowl",
+      "args": ["serve", "/home/sidd/dev/openSource/codeowl-meetup-demo"]
+    }
+  }
+}
