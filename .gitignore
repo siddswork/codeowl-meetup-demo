@@ -1,9 +1,2 @@
 .codeowl/
-
-# Build output, except the compiled classes -- committed on purpose as
-# proof the code compiles, in case mvn/Java isn't available wherever
-# this repo ends up being demoed from. Not enough to actually run the
-# app (that needs `mvn package`'s Quarkus-augmented fast-jar); this is
-# compile evidence only.
-target/*
-!target/classes/
+target/
