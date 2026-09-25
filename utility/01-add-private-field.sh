@@ -15,19 +15,28 @@ cat <<'EOF'
 
 === Ask CodeOwl next ===
 
-1. "show me the current shape of Book"
-   -> get_source on "src/main/java/com/example/library/Book.java::Book"
-   -> barcodeId shows up immediately (re-parsed within ~1s, no restart)
+  "show me the current shape of Book" / "what fields does Book have
+   right now?"
+    -> get_source("src/main/java/com/example/library/Book.java::Book")
+    -> barcodeId shows up immediately -- re-parsed within ~1s, no
+       restart, no re-generation of anything.
 
-2. "is CheckoutService's spec still accurate?"
-   -> get_spec on "src/main/java/com/example/library/CheckoutService.java"
-   -> expect: status "current" -- UNCHANGED, even though Book's own
-      source just moved. Same for BookResource.java and
-      OverdueCheckJob.java.
+  "is CheckoutService's spec still accurate?" / "did adding that field
+   break anything downstream?"
+    -> get_spec on each file below
+
+Expected -- every real consumer of Book, unaffected:
+
+| File                  | Status before | Status now | Why                          |
+|------------------------|---------------|------------|-------------------------------|
+| CheckoutService.java   | current       | current    | private field, not the promise |
+| BookResource.java      | current       | current    | private field, not the promise |
+| OverdueCheckJob.java   | current       | current    | private field, not the promise |
+| HealthResource.java    | current       | current    | never referenced Book at all   |
 
 The point: a private field is never part of the public promise, so it
-never enters interface_hash -- nothing that depends on Book has any
-reason to go stale.
+never enters interface_hash -- nothing that depends on Book, real or
+otherwise, has any reason to go stale.
 
 Run utility/reset.sh before the next trick.
 EOF

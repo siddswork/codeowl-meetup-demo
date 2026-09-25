@@ -16,20 +16,30 @@ cat <<'EOF'
 
 === Ask CodeOwl next ===
 
-1. "is CheckoutService's spec still accurate? what about BookResource
-    and OverdueCheckJob?"
-   -> get_spec on each file
-   -> expect: all three "stale", changed: ["changed:dependencies"] --
-      CodeOwl names exactly what moved, no guessing required.
+  "is CheckoutService's spec still accurate? what about BookResource
+   and OverdueCheckJob?" / "what actually depends on Book?"
+    -> get_spec on each file below (or get_callers("...Book.java::Book")
+       first, to show the 3 real reference edges before checking each)
 
-2. "what about HealthResource?"
-   -> get_spec on "src/main/java/com/example/library/HealthResource.java"
-   -> expect: still "current" -- it never referenced Book at all, so
-      the cascade has nothing to reach it through.
+  "what about HealthResource?" / "did that change affect everything,
+   or just what actually touches Book?"
+    -> get_spec on HealthResource.java
+
+Expected -- the real consumers cascade, the bystander doesn't:
+
+| File                  | Status before | Status now | Why                                  |
+|------------------------|---------------|------------|----------------------------------------|
+| CheckoutService.java   | current       | stale      | changed:dependencies -- reads Book     |
+| BookResource.java      | current       | stale      | changed:dependencies -- returns List<Book> |
+| OverdueCheckJob.java   | current       | stale      | changed:dependencies -- queries Book   |
+| HealthResource.java    | current       | current    | never referenced Book at all           |
+
+CodeOwl names exactly what moved (`changed: ["changed:dependencies"]`)
+-- no guessing which file to go re-check by hand.
 
 The point: interface_hash moved because a real public field appeared,
 so every direct importer of Book is correctly flagged -- and only
 those, not the whole repo.
 
-Run utility/reset.sh before the next trick.
+Run utility/reset.sh before you're done (or before rehearsing again).
 EOF
