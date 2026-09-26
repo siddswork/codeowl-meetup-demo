@@ -1,2 +1,8 @@
 .codeowl/
 target/
+
+# Machine-specific MCP configs, generated fresh per machine by
+# utility/mcp_setup.sh -- never committed, since the binary path is
+# absolute and specific to wherever the sibling codeowl repo sits.
+.vscode/mcp.json
+.mcp.json

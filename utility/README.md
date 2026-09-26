@@ -1,5 +1,17 @@
 # Demo playbook
 
+## 0. One-time setup: `./utility/mcp_setup.sh`
+
+Writes `.vscode/mcp.json` for VS Code + GitHub Copilot (Agent mode).
+Assumes this repo and the `codeowl` repo sit side by side in the same
+parent folder (e.g. `demo/codeowl/` and `demo/codeowl-meetup-demo/`).
+Auto-detects the sibling `codeowl` repo and its built binary (release,
+falling back to debug). Machine-specific output — `.vscode/mcp.json`
+is gitignored on purpose, run this fresh on whichever machine you
+demo from, not something committed and reused. `.mcp.json` (Claude
+Code's own format — different schema, `mcpServers` not `servers`) is
+gitignored the same way, for the same reason.
+
 Run these in order during the live demo. Each script prints something
 concrete (a real spec, a `git diff`, current coverage) plus the exact
 question to ask CodeOwl next, so nothing has to be memorized.
