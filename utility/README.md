@@ -32,3 +32,16 @@ question to ask CodeOwl next, so nothing has to be memorized.
 
 Every prediction above was verified end to end against the real graph
 before this playbook was written — not just asserted.
+
+## Optional extra (numbered 99, not part of the core sequence)
+
+**`./utility/99-add-style-guide.sh`** — adds `docs/specs/STYLE.md`
+live: a spec style guide aimed at a librarian, not a developer.
+`STYLE.md` has no required format at all (confirmed in `spec.rs`'s own
+tests — it's exempt from the file-spec frontmatter convention, never
+parsed, just read as plain instructions before writing). Only worth
+running if there's time: generate any still-`missing` feature after
+adding it, and its `## Summary` reads for a librarian while
+`### Behavior` right below it stays fully technical — same file, same
+commit, two readers, the exact claim the `trust` slide already makes.
+No reset script for this one; it's a real addition, not a trick.
