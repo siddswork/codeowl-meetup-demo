@@ -7,7 +7,10 @@ cd "$(dirname "$0")/.."
 
 FILE="src/main/java/com/example/library/Book.java"
 
-sed -i 's/public boolean available;/public boolean available;\n\n    \/\/ Added live: a public field. Part of Book'"'"'s real public shape.\n    public int totalCheckouts;/' "$FILE"
+# perl, not sed -i: sed's in-place-edit flag and its \n-in-replacement
+# handling both differ between GNU sed (Linux) and BSD sed (macOS) --
+# perl -i behaves identically on both, no platform branching needed.
+perl -i -pe 's/public boolean available;/public boolean available;\n\n    \/\/ Added live: a public field, now part of the real public shape.\n    public int totalCheckouts;/' "$FILE"
 
 echo "=== What changed ==="
 git diff -- "$FILE"

@@ -6,7 +6,10 @@ cd "$(dirname "$0")/.."
 
 FILE="src/main/java/com/example/library/Book.java"
 
-sed -i 's/private String internalNotes;/private String internalNotes;\n\n    \/\/ Added live: a private field. Internal-only, never exposed.\n    private String barcodeId;/' "$FILE"
+# perl, not sed -i: sed's in-place-edit flag and its \n-in-replacement
+# handling both differ between GNU sed (Linux) and BSD sed (macOS) --
+# perl -i behaves identically on both, no platform branching needed.
+perl -i -pe 's/private String internalNotes;/private String internalNotes;\n\n    \/\/ Added live: a private field. Internal-only, never exposed.\n    private String barcodeId;/' "$FILE"
 
 echo "=== What changed ==="
 git diff -- "$FILE"
