@@ -8,6 +8,7 @@
 # a requirement.
 set -euo pipefail
 cd "$(dirname "$0")/.."
+REPO_ROOT="$(pwd)"
 
 FILE="docs/specs/STYLE.md"
 
@@ -67,5 +68,7 @@ Compare it against a spec generated earlier in the demo (before this
 file existed) -- that's the visible before/after, in the same repo.
 
 No reset script for this one -- it's a real, permanent addition, not
-a trick. Delete docs/specs/STYLE.md by hand if you want it gone.
+a trick. Delete it by hand if you want it gone (absolute path on
+purpose -- correct no matter which directory your shell is in):
 EOF
+echo "  rm $REPO_ROOT/$FILE"

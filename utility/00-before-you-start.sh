@@ -4,6 +4,7 @@
 # anything; safe to re-run any time, including mid-rehearsal.
 set -euo pipefail
 cd "$(dirname "$0")/.."
+REPO_ROOT="$(pwd)"
 
 cat <<'EOF'
 === Moment 1: read tools, on CodeOwl's OWN repo (not this one) ===
@@ -85,4 +86,4 @@ echo "     the tool that actually drives a full documentation pass."
 echo
 echo "Then re-ask for coverage and show the table shrink."
 echo
-echo "Once that's done: ./utility/01-add-private-field.sh"
+echo "Once that's done: $REPO_ROOT/utility/01-add-private-field.sh"
